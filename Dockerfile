@@ -1,20 +1,20 @@
-# Use a lightweight PHP image with needed extensions
+# Use official PHP image with Apache
 FROM php:8.1-apache
 
-# Install system dependencies
+# Install Moodle dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     unzip \
     git \
-    && docker-php-ext-install pgsql pdo_pgsql
+    && docker-php-ext-install pgsql pdo_pgsql mysqli
 
-# Copy Moodle source code
-COPY . /var/www/html
+# Copy Moodle files into web root
+COPY . /var/www/html/
 
-# Set permissions
+# Fix permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Expose port
+# Expose port 80
 EXPOSE 80
 
 # Start Apache
