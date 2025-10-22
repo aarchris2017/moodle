@@ -13,8 +13,14 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy Moodle files into web root
+# Copy all files into the web directory
 COPY . /var/www/html/
+
+# Set Apache DocumentRoot to /var/www/html/public
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+
+# Optional: Enable Apache modules commonly needed by Moodle
+RUN a2enmod rewrite headers env dir mime
 
 # Fix permissions for Moodle web root
 RUN chown -R www-data:www-data /var/www/html
