@@ -20,5 +20,9 @@ RUN mkdir -p /var/moodledata && chown -R www-data:www-data /var/moodledata && ch
 # Expose web port
 EXPOSE 80
 
+# Debug
+RUN ls -l /var/www/html
+RUN ls -l /var/www/html/lib
+
 # Start Apache
 CMD ["apache2-foreground"]
